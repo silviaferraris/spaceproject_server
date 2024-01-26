@@ -2,6 +2,7 @@ import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import vehicleRouter from "./routes/vehicles";
 import { cors } from "hono/cors";
+import authRouter from "./routes/users";
 
 const app = new Hono();
 
@@ -18,6 +19,7 @@ app.use(
 );
 
 app.route("/vehicles", vehicleRouter);
+app.route("/", authRouter);
 
 const port = 3005;
 console.log(`Server is running on port ${port}`);

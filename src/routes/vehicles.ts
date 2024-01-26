@@ -1,9 +1,10 @@
-import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { sql } from "../config.db";
 import { z } from "zod";
 
 const vehicleRouter = new Hono();
+//vehicleRouter.use(); // use è un middleware e tutto passa attraverso questo
+
 const vehicleSchema = z.object({
   name: z.string().min(1),
   mission: z.string().min(1),
@@ -14,7 +15,6 @@ vehicleRouter.get("/", async (c) => {
   const vehiclesFromDb = await sql`
     SELECT * FROM vehicle
   `;
-
   const vehicles = vehiclesFromDb.map((v) => parseVehicle(v));
 
   return c.json({ vehicles });
